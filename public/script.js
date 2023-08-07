@@ -8,14 +8,12 @@ let userMessage = null;
 const API_KEY = "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";
 const inputInitHeight = chatInput.scrollHeight;
 
-
 const getBookList = async () => {
 
     let p = await fetch('/createSession')
     let response = await p.json()
     return response
 }
-
 
 const createChatLi = (message, className) => {
     const chatLi = document.createElement("li");
@@ -25,7 +23,9 @@ const createChatLi = (message, className) => {
     chatLi.querySelector("p").textContent = message;
     return chatLi;
 }
+
 let sessionId;
+
 chatbotToggler.addEventListener("click", function () {
     document.body.classList.toggle("show-chatbot")
     const mainFunc = async () => {
@@ -38,7 +38,6 @@ chatbotToggler.addEventListener("click", function () {
             headers: {
                 "Content-type": "application/json"
             },
-            // body: JSON.stringify(sendData),
         }
 
         const url = "http://api.endlessmedical.com/v1/dx/AcceptTermsOfUse?SessionID="+sessionId+"&passphrase=I%20have%20read,%20understood%20and%20I%20accept%20and%20agree%20to%20comply%20with%20the%20Terms%20of%20Use%20of%20EndlessMedicalAPI%20and%20Endless%20Medical%20services.%20The%20Terms%20of%20Use%20are%20available%20on%20endlessmedical.com";
@@ -55,9 +54,7 @@ const generateResponse = (chatElement, userMessage) => {
     if(userMessage=="Headache")
         x="HeadacheFrontal";
     else
-    if(userMessage=="Joints Pain")
-        x="JointsPain"
-    else
+    
     if(userMessage=="Loss Of Consciousness")
         x="LossOfConsciousness"
     else
@@ -67,16 +64,16 @@ const generateResponse = (chatElement, userMessage) => {
 
     const mainFunc = async () => {
 
-
         let options = {
             method: "POST",
             headers: {
                 "Content-type": "application/json"
             },
-            // body: JSON.stringify(sendData),
         }
         console.log(sessionId);
         const url = "http://api.endlessmedical.com/v1/dx/UpdateFeature?SessionID="+sessionId+"&name="+x+"&value=1";
+
+
         let p = await fetch(url, options)
         let response = await p.json()
         console.log(response);
@@ -85,24 +82,17 @@ const generateResponse = (chatElement, userMessage) => {
 
     let finalResponse;
 
-
     const mainFunc2 = async () => {
 
-
-        // let options = {
-        //     method: "POST",
-        //     headers: {
-        //         "Content-type": "application/json"
-        //     },
-        //     // body: JSON.stringify(sendData),
-        // }
-        // console.log(sessionId);
-        const url = "http://api.endlessmedical.com/v1/dx/Analyze?SessionID="+sessionId+"";
-        let p = await fetch(url)
-        finalResponse = await p.json()
+        const url1 = "http://api.endlessmedical.com/v1/dx/Analyze?SessionID="+sessionId;
+        console.log(url1);
+        let p = await fetch(url1);
+        finalResponse = await p.json();
         console.log(finalResponse);
     }
-    mainFunc2();
+    setTimeout(function(){
+        mainFunc2();
+    },1000)
     
         messageElement.textContent = "Oops! Something went wrong. Please try again.";
     
@@ -112,22 +102,10 @@ const handleChat = () => {
 
     userMessage = chatInput.value.trim();
 
-
-
-
-
-
-
-
-
-
     if (!userMessage) return;
-
-
 
     chatInput.value = "";
     chatInput.style.height = `${inputInitHeight}px`;
-
 
     chatbox.appendChild(createChatLi(userMessage, "outgoing"));
     chatbox.scrollTo(0, chatbox.scrollHeight);
