@@ -45,7 +45,6 @@ const generateResponse = (chatElement) => {
 const handleChat = () => {
     userMessage = chatInput.value.trim(); 
     if(!userMessage) return;
-
     
     chatInput.value = "";
     chatInput.style.height = `${inputInitHeight}px`;
