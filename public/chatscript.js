@@ -28,6 +28,11 @@ let sessionId;
 
 chatbotToggler.addEventListener("click", function () {
     document.body.classList.toggle("show-chatbot")
+    
+});
+
+const generateResponse = (chatElement, userMessage) => {
+
     const mainFunc = async () => {
         let session = await getBookList();
         sessionId = session.SessionID;
@@ -46,9 +51,6 @@ chatbotToggler.addEventListener("click", function () {
         console.log(response);
     }
     mainFunc();
-});
-
-const generateResponse = (chatElement, userMessage) => {
 
     let x;
     if (userMessage == "Headache")
@@ -71,7 +73,7 @@ const generateResponse = (chatElement, userMessage) => {
 
     const messageElement = chatElement.querySelector("p");
 
-    const mainFunc = async () => {
+    const mainFunc2 = async () => {
 
         let options = {
             method: "POST",
@@ -82,16 +84,19 @@ const generateResponse = (chatElement, userMessage) => {
         console.log(sessionId);
         const url = "http://api.endlessmedical.com/v1/dx/UpdateFeature?SessionID=" + sessionId + "&name=" + x + "&value=1";
 
-
         let p = await fetch(url, options)
         let response = await p.json()
         console.log(response);
     }
-    mainFunc();
+    setTimeout(function () {
+        mainFunc2();
+
+    }, 1000)
+    // mainFunc2();
 
     // let finalResponse;
 
-    const mainFunc2 = async () => {
+    const mainFunc3 = async () => {
 
         const url1 = "http://api.endlessmedical.com/v1/dx/Analyze?SessionID=" + sessionId;
         let p = await fetch(url1);
@@ -122,9 +127,9 @@ const generateResponse = (chatElement, userMessage) => {
         messageElement.innerHTML = htmlString;
     }
     setTimeout(function () {
-        mainFunc2();
+        mainFunc3();
 
-    }, 1000)
+    }, 2000)
 
 
 }
