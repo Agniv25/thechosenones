@@ -94,7 +94,7 @@ const generateResponse = (chatElement, userMessage) => {
         mainFunc2();
     },1000)
     
-        messageElement.textContent = "Oops! Something went wrong. Please try again.";
+    messageElement.textContent = "Oops! Something went wrong. Please try again.";
     
 }
 
