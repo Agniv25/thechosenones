@@ -1,129 +1,140 @@
 <%- include("partials/header.ejs") %>
 
 
-<body>
-    <header id="header" class="fixed-top">
-        <div class="container d-flex align-items-center">
+    <body>
+        <header id="header" class="fixed-top">
+            <div class="container d-flex align-items-center">
 
-            <h1 class="logo me-auto"><a><img class = "Logo" src="logo.png" alt=""> Care Point</a></h1>
+                <h1 class="logo me-auto"><a><img class="Logo" src="logo.png" alt=""> Care Point</a></h1>
 
-            <nav id="navbar" class="navbar order-last order-lg-0">
-                <ul>
-                    <li>
-                      <form id="userHome" action="/userHome" method="post"><a class="nav-link scrollto "
-                          href="javascript:document.getElementById('userHome').submit();">Home</a><input type="text"
-                          name="userName" value="<%= userName %>" id="" hidden> </form>
-                    </li>
-                    <li>
-                      <form id="doctorOnDemand" action="/doctorOnDemand" method="post"><a class="nav-link scrollto  "
-                          href="javascript:document.getElementById('doctorOnDemand').submit();">Doctor-On-Demand</a><input
-                          type="text" name="userName" value="<%= userName %>" id="" hidden> </form>
-                    </li>
-                    <li>
-                      <form id="clinicAppointment" action="/clinicAppointment" method="post"><a
-                          class="nav-link scrollto"
-                          href="javascript:document.getElementById('clinicAppointment').submit();">Schedule
-                          Appointment</a><input type="text" name="userName" value="<%= userName %>" id="" hidden> </form>
-                    </li>
-                    <li>
-                      <form id="myAppointments" action="/myAppointments" method="post"><a class="nav-link scrollto active"
-                          href="javascript:document.getElementById('myAppointments').submit();">My Appointments</a><input
-                          type="text" name="userName" value="<%= userName %>" id="" hidden> </form>
-                    </li>
-        
-                  </ul>
-                <i class="bi bi-list mobile-nav-toggle"></i>
-            </nav>
+                <nav id="navbar" class="navbar order-last order-lg-0">
+                    <ul>
+                        <li>
+                            <form id="userHome" action="/userHome" method="post"><a class="nav-link scrollto "
+                                    href="javascript:document.getElementById('userHome').submit();">Home</a><input
+                                    type="text" name="userName" value="<%= userName %>" id="" hidden> </form>
+                        </li>
+                        <li>
+                            <form id="doctorOnDemand" action="/doctorOnDemand" method="post"><a
+                                    class="nav-link scrollto  "
+                                    href="javascript:document.getElementById('doctorOnDemand').submit();">Doctor-On-Demand</a><input
+                                    type="text" name="userName" value="<%= userName %>" id="" hidden> </form>
+                        </li>
+                        <li>
+                            <form id="clinicAppointment" action="/clinicAppointment" method="post"><a
+                                    class="nav-link scrollto"
+                                    href="javascript:document.getElementById('clinicAppointment').submit();">Schedule
+                                    Appointment</a><input type="text" name="userName" value="<%= userName %>" id=""
+                                    hidden> </form>
+                        </li>
+                        <li>
+                            <form id="schedulemeeting" action="/schedulemeeting" method="post"><a
+                                    class="nav-link scrollto "
+                                    href="javascript:document.getElementById('schedulemeeting').submit();">Schedule
+                                    Online Meeting</a><input type="text" name="userName" value="<%= userName %>" id=""
+                                    hidden> </form>
+                        </li>
+                        <li>
+                            <form id="myAppointments" action="/myAppointments" method="post"><a
+                                    class="nav-link scrollto active"
+                                    href="javascript:document.getElementById('myAppointments').submit();">My
+                                    Appointments</a><input type="text" name="userName" value="<%= userName %>" id=""
+                                    hidden> </form>
+                        </li>
+
+                    </ul>
+                    <i class="bi bi-list mobile-nav-toggle"></i>
+                </nav>
 
 
 
-        </div>
-    </header>
-    <section id="hero" class="d-flex align-items-center" style="padding-top: 0px">
-        <div class="container">
-            <h1>Hi <%= userName %> .<br> Welcome to Care Point</h1>
-            <h2>Healing lives, with care and compassion.</h2>
-
-        </div>
-    </section>
-
-
-    <main id="main">
-
-        <!-- ======= Why Us Section ======= -->
-        <section id="why-us" class="why-us">
+            </div>
+        </header>
+        <section id="hero" class="d-flex align-items-center" style="padding-top: 0px">
             <div class="container">
-                <div class="icon-boxes d-flex flex-column boxshadow ">
-                    <div class="icon-box mt-4 mt-xl-0" style="padding-top: 30px;">
-                     <h3>My Appointments</h3>
-                        <%if(doctors[0]){ %>
-                            <div class="formContent">
-                                <div class="row">
-                                    <% doctors.forEach(element=> { %>
-                                        <div class="col-lg-6 col-md-6 col-sm-12 reveal1">
-                                            <div class="card">
-                                                <div class="card-body">
-                                                    <div class="container">
-                                                        <div class="row">
-                                                            <div class="col-4">
-                                                                <strong>Doctor Name</strong>
+                <h1>Hi <%= userName %> .<br> Welcome to Care Point</h1>
+                <h2>Healing lives, with care and compassion.</h2>
+
+            </div>
+        </section>
+
+
+        <main id="main">
+
+            <!-- ======= Why Us Section ======= -->
+            <section id="why-us" class="why-us">
+                <div class="container">
+                    <div class="icon-boxes d-flex flex-column boxshadow ">
+                        <div class="icon-box mt-4 mt-xl-0" style="padding-top: 30px;">
+                            <h3>My Appointments</h3>
+                            <%if(doctors[0]){ %>
+                                <div class="formContent">
+                                    <div class="row">
+                                        <% doctors.forEach(element=> { %>
+                                            <div class="col-lg-6 col-md-6 col-sm-12 reveal1">
+                                                <div class="card">
+                                                    <div class="card-body">
+                                                        <div class="container">
+                                                            <div class="row">
+                                                                <div class="col-4">
+                                                                    <strong>Doctor Name</strong>
+                                                                </div>
+                                                                <div class="col-8">
+                                                                    : Dr. <%= element.doctorName %>
+                                                                </div>
                                                             </div>
-                                                            <div class="col-8">
-                                                                : Dr. <%= element.doctorName %>
+                                                            <div class="row">
+                                                                <div class="col-4">
+                                                                    <strong>Date</strong>
+                                                                </div>
+                                                                <div class="col-8">
+                                                                    : <%= element.date %>
+                                                                </div>
+
                                                             </div>
-                                                        </div>
-                                                        <div class="row">
-                                                            <div class="col-4">
-                                                                <strong>Date</strong>
+                                                            <div class="row">
+                                                                <div class="col-4">
+                                                                    <strong>Slot</strong>
+                                                                </div>
+                                                                <div class="col-8">
+                                                                    : <%= element.slot%>
+                                                                </div>
+
                                                             </div>
-                                                            <div class="col-8">
-                                                                : <%= element.date %>
+                                                            <div class="row">
+                                                                <div class="col-4">
+                                                                    <strong>Appointment Type</strong>
+                                                                </div>
+                                                                <div class="col-8">
+                                                                    : <%= element.type %>
+                                                                </div>
+
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-4">
+                                                                    <strong>Appointment Status</strong>
+                                                                </div>
+                                                                <div class="col-8">
+                                                                    : <%= element.status %>
+                                                                </div>
                                                             </div>
 
                                                         </div>
-                                                        <div class="row">
-                                                            <div class="col-4">
-                                                                <strong>Slot</strong>
-                                                            </div>
-                                                            <div class="col-8">
-                                                                : <%= element.slot%>
-                                                            </div>
-
-                                                        </div>
-                                                        <div class="row">
-                                                            <div class="col-4">
-                                                                <strong>Appointment Type</strong>
-                                                            </div>
-                                                            <div class="col-8">
-                                                                : <%= element.type %>
-                                                            </div>
-
-                                                        </div>
-                                                        <div class="row">
-                                                            <div class="col-4">
-                                                                <strong>Appointment Status</strong>
-                                                            </div>
-                                                            <div class="col-8">
-                                                                : <%= element.status %>
-                                                            </div>
-                                                        </div>
-
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <% }); %>
+                                            <% }); %>
+                                    </div>
                                 </div>
-                            </div>
-                            <% } else{%>
-                    
-                                <div class="alert alert-danger" role="alert">You have no appointments</div>
-                                <% } %>
+                                <% } else{%>
+
+                                    <div class="alert alert-danger" role="alert">You have no appointments</div>
+                                    <% } %>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </section>
-</main>
+            </section>
+        </main>
 
 
         <%- include("partials/footer.ejs") %>

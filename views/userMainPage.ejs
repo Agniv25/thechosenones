@@ -1,107 +1,114 @@
 <%- include("partials/header.ejs") %>
-<body>
 
-  <header id="header" class="fixed-top">
-    <div class="container d-flex align-items-center">
+  <body>
 
-      <h1 class="logo me-auto"><a><img class = "Logo" src="logo.png" alt=""> Care Point</a></h1>
+    <header id="header" class="fixed-top">
+      <div class="container d-flex align-items-center">
 
-      <nav id="navbar" class="navbar order-last order-lg-0">
-        <ul>
-          <li>
-            <form id="userHome" action="/userHome" method="post"><a class="nav-link scrollto active"
-                href="javascript:document.getElementById('userHome').submit();">Home</a><input type="text"
-                name="userName" value="<%= userName %>" id="" hidden> </form>
-          </li>
-          <li>
-            <form id="doctorOnDemand" action="/doctorOnDemand" method="post"><a class="nav-link scrollto  "
-                href="javascript:document.getElementById('doctorOnDemand').submit();">Doctor-On-Demand</a><input
-                type="text" name="userName" value="<%= userName %>" id="" hidden> </form>
-          </li>
-          <li>
-            <form id="clinicAppointment" action="/clinicAppointment" method="post"><a
-                class="nav-link scrollto"
-                href="javascript:document.getElementById('clinicAppointment').submit();">Schedule
-                Appointment</a><input type="text" name="userName" value="<%= userName %>" id="" hidden> </form>
-          </li>
-          <li>
-            <form id="myAppointments" action="/myAppointments" method="post"><a class="nav-link scrollto "
-                href="javascript:document.getElementById('myAppointments').submit();">My Appointments</a><input
-                type="text" name="userName" value="<%= userName %>" id="" hidden> </form>
-          </li>
+        <h1 class="logo me-auto"><a><img class="Logo" src="logo.png" alt=""> Care Point</a></h1>
 
-        </ul>
-        <i class="bi bi-list mobile-nav-toggle"></i>
-      </nav>
-
-
-
-    </div>
-  </header>
-
-  <section id="hero" class="d-flex align-items-center" style="padding-top: 0px">
-    <div class="container">
-      <h1>Hi <%= userName %> .<br> Welcome to Care Point</h1>
-      <h2>Healing lives, with care and compassion.</h2>
-
-    </div>
-  </section>
+        <nav id="navbar" class="navbar order-last order-lg-0">
+          <ul>
+            <li>
+              <form id="userHome" action="/userHome" method="post"><a class="nav-link scrollto active"
+                  href="javascript:document.getElementById('userHome').submit();">Home</a><input type="text"
+                  name="userName" value="<%= userName %>" id="" hidden> </form>
+            </li>
+            <li>
+              <form id="doctorOnDemand" action="/doctorOnDemand" method="post"><a class="nav-link scrollto  "
+                  href="javascript:document.getElementById('doctorOnDemand').submit();">Doctor-On-Demand</a><input
+                  type="text" name="userName" value="<%= userName %>" id="" hidden> </form>
+            </li>
+            <li>
+              <form id="clinicAppointment" action="/clinicAppointment" method="post"><a class="nav-link scrollto"
+                  href="javascript:document.getElementById('clinicAppointment').submit();">Schedule
+                  Appointment</a><input type="text" name="userName" value="<%= userName %>" id="" hidden> </form>
+            </li>
+            <li>
+              <form id="schedulemeeting" action="/schedulemeeting" method="post"><a class="nav-link scrollto  "
+                  href="javascript:document.getElementById('schedulemeeting').submit();">Schedule Online
+                  Meeting</a><input type="text" name="userName" value="<%= userName %>" id="" hidden> </form>
+            </li>
+            <li>
+              <form id="myAppointments" action="/myAppointments" method="post"><a class="nav-link scrollto "
+                  href="javascript:document.getElementById('myAppointments').submit();">My Appointments</a><input
+                  type="text" name="userName" value="<%= userName %>" id="" hidden> </form>
+            </li>
 
 
-  <main id="main">
+          </ul>
+          <i class="bi bi-list mobile-nav-toggle"></i>
+        </nav>
 
-    <!-- ======= Why Us Section ======= -->
-    <section id="why-us" class="why-us">
+
+
+      </div>
+    </header>
+
+    <section id="hero" class="d-flex align-items-center" style="padding-top: 0px">
       <div class="container">
-
-        <div class="row">
-          <div class="col-lg-4 d-flex align-items-stretch">
-            <div class="content">
-              <h3>Why Choose Care Point?</h3>
-              <p>
-                We at Care Point Offer High-quality medical care, State-of-the-art facilities, Comprehensive range of
-                services, Patient-centered approach, Convenient locations.
-              </p>
-              <div class="text-center">
-
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-8 d-flex align-items-stretch">
-            <div class="icon-boxes d-flex flex-column justify-content-center">
-              <div class="row">
-                <div class="col-xl-4 d-flex align-items-stretch">
-                  <div class="icon-box mt-4 mt-xl-0 boxshadow">
-                    <i class="fas fa-hospital-alt"></i>
-                    <h4>Newest Technologies</h4>
-                    <p>Care Point Hospital invests in innovative technologies, such as telemedicine and Artificial
-                      Intelligence, to improve patient care and outcomes.</p>
-                  </div>
-                </div>
-                <div class="col-xl-4 d-flex align-items-stretch">
-                  <div class="icon-box mt-4 mt-xl-0">
-                    <i class="fas fa-user-md"></i>
-                    <h4>Experienced Doctors</h4>
-                    <p>Care Point Hospital has a team of experienced doctors who provide personalized, compassionate
-                      care to patients across all specialties.</p>
-                  </div>
-                </div>
-                <div class="col-xl-4 d-flex align-items-stretch">
-                  <div class="icon-box mt-4 mt-xl-0">
-                    <i class="fas fa-briefcase-medical"></i>
-                    <h4>High Customer Satisfaction</h4>
-                    <p>Care Point Hospital achieves high customer satisfaction by providing quality healthcare services
-                      and putting patients first.</p>
-                  </div>
-                </div>
-              </div>
-            </div><!-- End .content-->
-          </div>
-        </div>
+        <h1>Hi <%= userName %> .<br> Welcome to Care Point</h1>
+        <h2>Healing lives, with care and compassion.</h2>
 
       </div>
     </section>
 
-  </main>
 
-  <%- include("partials/footer.ejs") %>
+    <main id="main">
+
+      <!-- ======= Why Us Section ======= -->
+      <section id="why-us" class="why-us">
+        <div class="container">
+
+          <div class="row">
+            <div class="col-lg-4 d-flex align-items-stretch">
+              <div class="content">
+                <h3>Why Choose Care Point?</h3>
+                <p>
+                  We at Care Point Offer High-quality medical care, State-of-the-art facilities, Comprehensive range of
+                  services, Patient-centered approach, Convenient locations.
+                </p>
+                <div class="text-center">
+
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-8 d-flex align-items-stretch">
+              <div class="icon-boxes d-flex flex-column justify-content-center">
+                <div class="row">
+                  <div class="col-xl-4 d-flex align-items-stretch">
+                    <div class="icon-box mt-4 mt-xl-0 boxshadow">
+                      <i class="fas fa-hospital-alt"></i>
+                      <h4>Newest Technologies</h4>
+                      <p>Care Point Hospital invests in innovative technologies, such as telemedicine and Artificial
+                        Intelligence, to improve patient care and outcomes.</p>
+                    </div>
+                  </div>
+                  <div class="col-xl-4 d-flex align-items-stretch">
+                    <div class="icon-box mt-4 mt-xl-0">
+                      <i class="fas fa-user-md"></i>
+                      <h4>Experienced Doctors</h4>
+                      <p>Care Point Hospital has a team of experienced doctors who provide personalized, compassionate
+                        care to patients across all specialties.</p>
+                    </div>
+                  </div>
+                  <div class="col-xl-4 d-flex align-items-stretch">
+                    <div class="icon-box mt-4 mt-xl-0">
+                      <i class="fas fa-briefcase-medical"></i>
+                      <h4>High Customer Satisfaction</h4>
+                      <p>Care Point Hospital achieves high customer satisfaction by providing quality healthcare
+                        services
+                        and putting patients first.</p>
+                    </div>
+                  </div>
+                </div>
+              </div><!-- End .content-->
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+    </main>
+
+    <%- include("partials/footer.ejs") %>
