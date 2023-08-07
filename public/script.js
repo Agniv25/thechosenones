@@ -54,11 +54,20 @@ const generateResponse = (chatElement, userMessage) => {
     if (userMessage == "Headache")
         x = "HeadacheFrontal";
     else
-
-        if (userMessage == "Loss Of Consciousness")
-            x = "LossOfConsciousness"
+        if (userMessage == "Fatigue")
+            x = "GeneralizedFatigue"
         else
-            x = userMessage
+            if (userMessage == "Loss Of Consciousness")
+                x = "LossOfConsciousness"
+            else
+            if(userMessage == "Loss Of Smell")
+                x="LossOfSmell"
+            else
+            if(userMessage == "Loss Of Taste")
+                x="LossOfTaste"
+            else
+            
+                x = userMessage
 
     const messageElement = chatElement.querySelector("p");
 
@@ -86,35 +95,35 @@ const generateResponse = (chatElement, userMessage) => {
 
         const url1 = "http://api.endlessmedical.com/v1/dx/Analyze?SessionID=" + sessionId;
         let p = await fetch(url1);
-       let finalResponse = await p.json();
+        let finalResponse = await p.json();
         console.log(finalResponse);
         let diseasesArray = [];
         let percentageArray = [];
-        
+
         finalResponse.Diseases.forEach(element => {
             diseasesArray.push(Object.keys(element)[0]);
             percentageArray.push(Object.values(element)[0]);
         });
         console.log(diseasesArray);
         let htmlString = `<table>`;
-        
+
         let i;
         for (i = 0; i < 3; i++) {
             htmlString += `<tr>
         <td>${diseasesArray[i]}</td>
-        <td>${Math.round(percentageArray[i] *10000 )+"%"}</td>
+        <td>${Math.round(percentageArray[i] * 10000) + "%"}</td>
         </tr>`
-    }
-    htmlString += "</table>";
-    diseasesArray = [];
-    percentageArray = [];
-    console.log(diseasesArray);
+        }
+        htmlString += "</table>";
+        diseasesArray = [];
+        percentageArray = [];
+        console.log(diseasesArray);
 
         messageElement.innerHTML = htmlString;
     }
     setTimeout(function () {
         mainFunc2();
-        
+
     }, 1000)
 
 
