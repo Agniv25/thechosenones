@@ -10,7 +10,7 @@ const inputInitHeight = chatInput.scrollHeight;
 
 const getBookList = async () => {
 
-    let p = await fetch('/createSession')
+    let p = await fetch("http://api.endlessmedical.com/v1/dx/InitSession")
     let response = await p.json()
     return response
 }
