@@ -4,9 +4,16 @@ const chatbox = document.querySelector(".chatbox");
 const chatInput = document.querySelector(".chat-input textarea");
 const sendChatBtn = document.querySelector(".chat-input span");
 
-let userMessage = null; 
+let userMessage = null;
 const API_KEY = "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";
 const inputInitHeight = chatInput.scrollHeight;
+
+const getBookList = async () => {
+
+    let p = await fetch('http://api.endlessmedical.com/v1/dx/InitSession')
+    let response = await p.json()
+    return response
+}
 
 const createChatLi = (message, className) => {
     const chatLi = document.createElement("li");
@@ -17,60 +24,140 @@ const createChatLi = (message, className) => {
     return chatLi;
 }
 
-const generateResponse = (chatElement) => {
-    const API_URL = "https://api.openai.com/v1/chat/completions";
+let sessionId;
+
+chatbotToggler.addEventListener("click", function () {
+    document.body.classList.toggle("show-chatbot")
+    const mainFunc = async () => {
+        let session = await getBookList();
+        sessionId = session.SessionID;
+        console.log(session.SessionID);
+
+        let options = {
+            method: "POST",
+            headers: {
+                "Content-type": "application/json"
+            },
+        }
+
+        const url = "http://api.endlessmedical.com/v1/dx/AcceptTermsOfUse?SessionID=" + sessionId + "&passphrase=I%20have%20read,%20understood%20and%20I%20accept%20and%20agree%20to%20comply%20with%20the%20Terms%20of%20Use%20of%20EndlessMedicalAPI%20and%20Endless%20Medical%20services.%20The%20Terms%20of%20Use%20are%20available%20on%20endlessmedical.com";
+        let p = await fetch(url, options)
+        let response = await p.json()
+        console.log(response);
+    }
+    mainFunc();
+});
+
+const generateResponse = (chatElement, userMessage) => {
+
+    let x;
+    if (userMessage == "Headache")
+        x = "HeadacheFrontal";
+    else
+        if (userMessage == "Fatigue")
+            x = "GeneralizedFatigue"
+        else
+            if (userMessage == "Loss Of Consciousness")
+                x = "LossOfConsciousness"
+            else
+            if(userMessage == "Loss Of Smell")
+                x="LossOfSmell"
+            else
+            if(userMessage == "Loss Of Taste")
+                x="LossOfTaste"
+            else
+            
+                x = userMessage
+
     const messageElement = chatElement.querySelector("p");
 
-    const requestOptions = {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-            "Authorization": `Bearer ${API_KEY}`
-        },
-        body: JSON.stringify({
-            model: "gpt-3.5-turbo",
-            messages: [{role: "user", content: userMessage}],
-        })
-    }
+    const mainFunc = async () => {
 
-   
-    fetch(API_URL, requestOptions).then(res => res.json()).then(data => {
-        messageElement.textContent = data.choices[0].message.content.trim();
-    }).catch(() => {
-        messageElement.classList.add("error");
-        messageElement.textContent = "Oops! Something went wrong. Please try again.";
-    }).finally(() => chatbox.scrollTo(0, chatbox.scrollHeight));
+        let options = {
+            method: "POST",
+            headers: {
+                "Content-type": "application/json"
+            },
+        }
+        console.log(sessionId);
+        const url = "http://api.endlessmedical.com/v1/dx/UpdateFeature?SessionID=" + sessionId + "&name=" + x + "&value=1";
+
+
+        let p = await fetch(url, options)
+        let response = await p.json()
+        console.log(response);
+    }
+    mainFunc();
+
+    // let finalResponse;
+
+    const mainFunc2 = async () => {
+
+        const url1 = "http://api.endlessmedical.com/v1/dx/Analyze?SessionID=" + sessionId;
+        let p = await fetch(url1);
+        let finalResponse = await p.json();
+        console.log(finalResponse);
+        let diseasesArray = [];
+        let percentageArray = [];
+
+        finalResponse.Diseases.forEach(element => {
+            diseasesArray.push(Object.keys(element)[0]);
+            percentageArray.push(Object.values(element)[0]);
+        });
+        console.log(diseasesArray);
+        let htmlString = `<table>`;
+
+        let i;
+        for (i = 0; i < 3; i++) {
+            htmlString += `<tr>
+        <td>${diseasesArray[i]}</td>
+        <td>${Math.round(percentageArray[i] * 10000) + "%"}</td>
+        </tr>`
+        }
+        htmlString += "</table>";
+        diseasesArray = [];
+        percentageArray = [];
+        console.log(diseasesArray);
+
+        messageElement.innerHTML = htmlString;
+    }
+    setTimeout(function () {
+        mainFunc2();
+
+    }, 1000)
+
+
 }
 
 const handleChat = () => {
-    userMessage = chatInput.value.trim(); 
-    if(!userMessage) return;
-    
+
+    userMessage = chatInput.value.trim();
+
+    if (!userMessage) return;
+
     chatInput.value = "";
     chatInput.style.height = `${inputInitHeight}px`;
 
-  
     chatbox.appendChild(createChatLi(userMessage, "outgoing"));
     chatbox.scrollTo(0, chatbox.scrollHeight);
-    
+
     setTimeout(() => {
-       
         const incomingChatLi = createChatLi("Thinking...", "incoming");
         chatbox.appendChild(incomingChatLi);
         chatbox.scrollTo(0, chatbox.scrollHeight);
-        generateResponse(incomingChatLi);
+        generateResponse(incomingChatLi, userMessage);
     }, 600);
 }
 
 chatInput.addEventListener("input", () => {
-   
+
     chatInput.style.height = `${inputInitHeight}px`;
     chatInput.style.height = `${chatInput.scrollHeight}px`;
 });
 
 chatInput.addEventListener("keydown", (e) => {
-    
-    if(e.key === "Enter" && !e.shiftKey && window.innerWidth > 800) {
+
+    if (e.key === "Enter" && !e.shiftKey && window.innerWidth > 800) {
         e.preventDefault();
         handleChat();
     }
@@ -78,7 +165,44 @@ chatInput.addEventListener("keydown", (e) => {
 
 sendChatBtn.addEventListener("click", handleChat);
 closeBtn.addEventListener("click", () => document.body.classList.remove("show-chatbot"));
-chatbotToggler.addEventListener("click", () => document.body.classList.toggle("show-chatbot"));
+function reveal1()
+{
+    let r1 = document.querySelectorAll(".reveal1");
+    for(i=0;i<r1.length;i++)
+    {
+       let wh = window.innerHeight;     /*wh= window height */
+       let th= r1[i].getBoundingClientRect().top;   /*th= top height */
+       let vh=150;    /*view height  */
+       if(th<wh-vh)
+       {
+        r1[i].classList.add("active1");
+       }
+       else
+       {
+        r1[i].classList.remove("active1");
+       }
+    }
+}
+
+function reveal2()
+{
+    let r2 = document.querySelectorAll(".reveal2");
+    for(i=0;i<r2.length;i++)
+    {
+       let wh = window.innerHeight;
+       let th= r2[i].getBoundingClientRect().top;
+       let vh=150;
+       if(th<wh-vh)
+       {
+        r2[i].classList.add("active2");
+       }
+       else
+       {
+        r2[i].classList.remove("active2");
+       }
+    }
+}
 
 
-
+window.addEventListener("scroll", reveal1);
+window.addEventListener("scroll", reveal2);

@@ -11,6 +11,7 @@ body {
 }
 .chatbot-toggler {
   position: fixed;
+  z-index: 999;
   bottom: 30px;
   right: 35px;
   outline: none;
@@ -41,10 +42,10 @@ body.show-chatbot .chatbot-toggler span:last-child {
 }
 .chatbot {
   position: fixed;
-  top:90px;
-  z-index: 99;
+  top:20px;
+  z-index: 999;
   right: 75px;
-  bottom: 50px;
+  bottom: 15px;
   width: 420px;
   background: #fff;
   border-radius: 15px;
@@ -177,7 +178,7 @@ header h2 {
     bottom: 20px;
   }
   .chatbot {
-    top:200px;
+    top:150px;
     right: 0;
     bottom: 0;
     height: 40%;
@@ -195,29 +196,35 @@ header h2 {
     display: block;
   }
 }
-  
-  @media (max-width: 768px) {
-      .chatbot-toggler {
-        right: 20px;
-        bottom: 20px;
-      }
-      .chatbot {
-        top:200px;
-        right: 0;
-        bottom: 0;
-        height: 60%;
-        border-radius: 0;
-        width: 100%;
-        transform: scale(1);
-      }
-      .chatbot .chatbox {
-        height: 80%;
-        padding: 25px 15px 70px;
-      }
-      .chatbot .chat-input {
-        padding: 5px 15px;
-      }
-      .chatbot header span {
-        display: block;
-      }
+
+@media (max-width: 768px) {
+    .chatbot-toggler {
+      right: 20px;
+      bottom: 20px;
     }
+    .chatbot {
+      top:250px;
+      right: 0;
+      bottom: 0;
+      height: 60%;
+      border-radius: 0;
+      width: 100%;
+      transform: scale(1);
+    }
+    .chatbot .chatbox {
+      height: 80%;
+      padding: 25px 15px 70px;
+    }
+    .chatbot .chat-input {
+      padding: 5px 15px;
+    }
+    .chatbot header span {
+      display: block;
+    }
+  }
+  
+  /* Additional media query for smaller screen sizes */
+  /* @media (max-width: 480px) {
+    .chatbot .chatbox {
+      padding: 20px 10px 60px;
+    } */
