@@ -15,18 +15,18 @@ app.get("/",function(req,res){
     res.render("chat");
 })
 
-app.get("/createSession", function (req, res) {
+// app.get("/createSession", function (req, res) {
     
-    const url = "http://api.endlessmedical.com/v1/dx/InitSession";
+//     const url = "http://api.endlessmedical.com/v1/dx/InitSession";
 
-    http.get(url, function (response) {
+//     http.get(url, function (response) {
 
-        response.on("data", function (data) {            
-            const bookList = JSON.parse(data)
-            res.json(bookList);
-        })
-    })
-})
+//         response.on("data", function (data) {            
+//             const bookList = JSON.parse(data)
+//             res.json(bookList);
+//         })
+//     })
+// })
 
 
 // //Connecting with MongoDB Database
