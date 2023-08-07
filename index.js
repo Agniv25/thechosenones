@@ -74,7 +74,118 @@ const User = mongoose.model("user", userSchema);
 const Appointment = mongoose.model("appointment", appointmentSchema);
 const Schedule = mongoose.model("schedule", scheduleSchema);
 
+app.get("/", function (req, res) {
+    res.render("main")
+})
 
+//citizen login through first page
+
+app.get("/citizenLogin", function (req, res) {
+    res.render("userLogin", { text: false, passwordFail: false, notFound: false });
+})
+
+// citizen Sign Up through first page
+
+app.get("/citizenSignup", function (req, res) {
+    res.render("userSignup", { error: false });
+})
+
+//doctor login through first page
+
+app.get("/doctor", function (req, res) {
+    res.render("docLogin", { text: false });
+})
+
+//User Sign Up
+
+app.post("/userSignUp", function (req, res) {
+    const receivedName = req.body.name;
+    const receivedAge = req.body.age;
+    const receivedEmail = req.body.email;
+    const receivedGender = req.body.gender;
+    const receivedPhno = req.body.phno;
+
+    const receivedPswd = req.body.password;
+    const cpswd = req.body.cpassword;
+    if (receivedPswd != cpswd) {
+        res.render("userSignup", { error: true });  // if password and confirm password wont match
+    }
+    else {
+        User.findOne({ email: receivedEmail }).then(function (data) {
+            if (data) {
+                res.render("userLogin", { text: "Account already exists with this Email", passwordFail: false, notFound: false });     // if an account already exists while signing up
+            }
+            else {
+                const user = new User({
+                    name: receivedName,
+                    email: receivedEmail,                // if no account exists, new account is created 
+                    password: receivedPswd,
+                    phoneNumber: receivedPhno,
+                    age: receivedAge,
+                    gender: receivedGender,
+
+                })
+                user.save();
+                res.render("userLogin", { text: "Your account was succesfully created", passwordFail: false, notFound: false });
+            }
+        })
+    }
+})
+
+//User Login
+
+app.post("/userLogin", function (req, res) {
+    const email = req.body.email;
+    const pswd = req.body.password;
+    User.findOne({ email: email }).then(function (user) {
+        if (user) {
+            citizenName = user.name;
+            if (pswd === user.password) {
+                res.render("userMainPage", { doctorName: false, userName: user.name });  // if password matched
+            }
+            else {
+                res.render("userLogin", { passwordFail: true, text: false, notFound: false });  // if password not matched
+            }
+        }
+        else {
+            res.render("userLogin", { passwordFail: false, text: false, notFound: true });  // if password not matched
+        }
+    }).catch(function (err) {
+        res.send(err);
+    })
+})
+
+//Doctor Login
+
+app.post("/docLogin", function (req, res) {
+    const email = req.body.email;
+    const pswd = req.body.password;
+    Doctor.findOne({ email: email }).then(function (user) {
+        if (user) {
+            doctorName = user.name;
+
+            if (pswd === user.password) {
+                // if password matched
+
+                res.render("doctorMainPage", { userName: doctorName, text: false });
+
+            }
+            else {
+                res.render("docLogin", { text: "Wrong Password" });  // if password not matched
+            }
+        }
+        else {
+            res.render("docLogin", { text: "No account exists with this email" });  // if no account found
+        }
+    })
+})
+
+app.get("/doctorAppointments", function (req, res) {
+    Appointment.find({ doctorName: doctorName }).then(function (data) {
+        res.render("doctorAppointments", { userName: doctorName, patients: data });
+    });
+
+})
 
 app.get("/createSession", function (req, res) {
     
