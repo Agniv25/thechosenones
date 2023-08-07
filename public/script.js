@@ -40,7 +40,7 @@ chatbotToggler.addEventListener("click", function () {
             },
         }
 
-        const url = "http://api.endlessmedical.com/v1/dx/AcceptTermsOfUse?SessionID="+sessionId+"&passphrase=I%20have%20read,%20understood%20and%20I%20accept%20and%20agree%20to%20comply%20with%20the%20Terms%20of%20Use%20of%20EndlessMedicalAPI%20and%20Endless%20Medical%20services.%20The%20Terms%20of%20Use%20are%20available%20on%20endlessmedical.com";
+        const url = "http://api.endlessmedical.com/v1/dx/AcceptTermsOfUse?SessionID=" + sessionId + "&passphrase=I%20have%20read,%20understood%20and%20I%20accept%20and%20agree%20to%20comply%20with%20the%20Terms%20of%20Use%20of%20EndlessMedicalAPI%20and%20Endless%20Medical%20services.%20The%20Terms%20of%20Use%20are%20available%20on%20endlessmedical.com";
         let p = await fetch(url, options)
         let response = await p.json()
         console.log(response);
@@ -51,15 +51,15 @@ chatbotToggler.addEventListener("click", function () {
 const generateResponse = (chatElement, userMessage) => {
 
     let x;
-    if(userMessage=="Headache")
-        x="HeadacheFrontal";
+    if (userMessage == "Headache")
+        x = "HeadacheFrontal";
     else
-    
-    if(userMessage=="Loss Of Consciousness")
-        x="LossOfConsciousness"
-    else
-        x=userMessage
-    
+
+        if (userMessage == "Loss Of Consciousness")
+            x = "LossOfConsciousness"
+        else
+            x = userMessage
+
     const messageElement = chatElement.querySelector("p");
 
     const mainFunc = async () => {
@@ -71,7 +71,7 @@ const generateResponse = (chatElement, userMessage) => {
             },
         }
         console.log(sessionId);
-        const url = "http://api.endlessmedical.com/v1/dx/UpdateFeature?SessionID="+sessionId+"&name="+x+"&value=1";
+        const url = "http://api.endlessmedical.com/v1/dx/UpdateFeature?SessionID=" + sessionId + "&name=" + x + "&value=1";
 
 
         let p = await fetch(url, options)
@@ -80,22 +80,44 @@ const generateResponse = (chatElement, userMessage) => {
     }
     mainFunc();
 
-    let finalResponse;
+    // let finalResponse;
 
     const mainFunc2 = async () => {
 
-        const url1 = "http://api.endlessmedical.com/v1/dx/Analyze?SessionID="+sessionId;
-        console.log(url1);
+        const url1 = "http://api.endlessmedical.com/v1/dx/Analyze?SessionID=" + sessionId;
         let p = await fetch(url1);
-        finalResponse = await p.json();
+       let finalResponse = await p.json();
         console.log(finalResponse);
+        let diseasesArray = [];
+        let percentageArray = [];
+        
+        finalResponse.Diseases.forEach(element => {
+            diseasesArray.push(Object.keys(element)[0]);
+            percentageArray.push(Object.values(element)[0]);
+        });
+        console.log(diseasesArray);
+        let htmlString = `<table>`;
+        
+        let i;
+        for (i = 0; i < 3; i++) {
+            htmlString += `<tr>
+        <td>${diseasesArray[i]}</td>
+        <td>${Math.round(percentageArray[i] *10000 )+"%"}</td>
+        </tr>`
     }
-    setTimeout(function(){
+    htmlString += "</table>";
+    diseasesArray = [];
+    percentageArray = [];
+    console.log(diseasesArray);
+
+        messageElement.innerHTML = htmlString;
+    }
+    setTimeout(function () {
         mainFunc2();
-    },1000)
-    
-    messageElement.textContent = "Oops! Something went wrong. Please try again.";
-    
+        
+    }, 1000)
+
+
 }
 
 const handleChat = () => {
@@ -134,24 +156,3 @@ chatInput.addEventListener("keydown", (e) => {
 
 sendChatBtn.addEventListener("click", handleChat);
 closeBtn.addEventListener("click", () => document.body.classList.remove("show-chatbot"));
-// chatbotToggler.addEventListener("click", function () {
-//     document.body.classList.toggle("show-chatbot")
-//     const mainFunc = async () => {
-//         let session = await getBookList();
-//         // console.log(session.SessionID);
-
-//         let options = {
-//             method: "POST",
-//             headers: {
-//                 "Content-type": "application/json"
-//             },
-//             // body: JSON.stringify(sendData),
-//         }
-
-//         const url = "http://api.endlessmedical.com/v1/dx/AcceptTermsOfUse?SessionID="+session.SessionID+"&passphrase=I%20have%20read,%20understood%20and%20I%20accept%20and%20agree%20to%20comply%20with%20the%20Terms%20of%20Use%20of%20EndlessMedicalAPI%20and%20Endless%20Medical%20services.%20The%20Terms%20of%20Use%20are%20available%20on%20endlessmedical.com";
-//         let p = await fetch(url, options)
-//         let response = await p.json()
-//         // console.log(response);
-//     }
-//     mainFunc();
-// });
