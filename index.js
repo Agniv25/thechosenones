@@ -21,7 +21,7 @@ app.get("/createSession", function (req, res) {
 
     http.get(url, function (response) {
 
-        response.on("data", function (data) {
+        response.on("data", function (data) {            
             const bookList = JSON.parse(data)
             res.json(bookList);
         })
