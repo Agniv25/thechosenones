@@ -1,0 +1,123 @@
+
+<%- include("partials/header.ejs") %>
+
+
+<body>
+    <header id="header" class="fixed-top">
+        <div class="container d-flex align-items-center">
+
+            <h1 class="logo me-auto"><a><img class = "Logo" src="logo.png" alt=""> Care Point</a></h1>
+
+            <nav id="navbar" class="navbar order-last order-lg-0">
+                <ul>
+                    <li><a class="nav-link scrollto active" href="/doctorHome">Home</a></li>
+                    <li><a class="nav-link scrollto" href="/doctorAppointments">My Appointments</a></li>
+
+
+
+                </ul>
+                <i class="bi bi-list mobile-nav-toggle"></i>
+            </nav>
+
+
+
+        </div>
+    </header>
+    <section id="hero" class="d-flex align-items-center" style="padding-top: 0px">
+        <div class="container">
+            <h1>Hi Dr. <%= doctorName %> .<br> Welcome to Care Point</h1>
+            <h2>Healing lives, with care and compassion.</h2>
+
+        </div>
+    </section>
+
+    <body>
+        <main id="main">
+
+            <!-- ======= Why Us Section ======= -->
+            <section id="why-us" class="why-us">
+                <div class="container">
+
+
+
+
+                    <div class="icon-boxes d-flex flex-column boxshadow ">
+
+
+                        <div class="icon-box mt-4 mt-xl-0" style="padding-top: 30px;">
+                            <h1>Patient History</h1>
+                            <div class="formContent">
+                                <div class="row">
+                                    <% doctors.forEach(element=> { %>
+                                        <div class="col-lg-6 col-md-6 col-sm-12 reveal1">
+                                            <div class="card">
+                                                <div class="card-body">
+                    
+                                                    <div class="container">
+                                                        <div class="row">
+                                                            <div class="col-4">
+                                                                <strong>Patient Name</strong>
+                                                            </div>
+                                                            <div class="col-8">
+                                                                : <%= element.userName%>
+                                                            </div>
+
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-4">
+                                                                <strong>Date</strong>
+                                                            </div>
+                                                            <div class="col-8">
+                                                                : <%= element.date%>
+                                                            </div>
+
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-4">
+                                                                <strong>Slot</strong>
+                                                            </div>
+                                                            <div class="col-8">
+                                                                : <%= element.slot%>
+                                                            </div>
+
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-4">
+                                                                <strong>Address</strong>
+                                                            </div>
+                                                            <div class="col-8">
+                                                                : <%= element.address%>
+                                                            </div>
+
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-4">
+                                                                <strong>Appointment Type</strong>
+                                                            </div>
+                                                            <div class="col-8">
+                                                                : <%= element.type%>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-4">
+                                                                <strong>Status</strong>
+                                                            </div>
+                                                            <div class="col-8">
+                                                                : <%= element.status%>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <% }); %>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+       
+        
+        <%- include("partials/footer.ejs") %>
